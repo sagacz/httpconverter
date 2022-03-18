@@ -49,20 +49,19 @@ public class UserHttpDtoConverter implements HttpMessageConverter<User> {
                 new InputStreamReader(
                         inputMessage.getBody(),
                         Charset.forName(StandardCharsets.UTF_8.name())))){
-            int c = 0;
+            int c;
             while((c = reader.read()) != -1)
                 builder.append((char)c);
         }
         String[] fields = builder.toString().split("#");
-        fields[0] = fields[0].trim();
-        fields[1] = fields[1].trim();
-        fields[2] = fields[2].trim();
-        fields[3] = fields[3].trim();
+        for(int i = 0; i < fields.length; i++)
+            fields[i] = fields[i].trim();
         return new User(fields[0], fields[1], fields[2], fields[3]);
     }
 
     @Override
     public void write(User user, MediaType contentType, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
+        throw new IOException();
 
     }
 }
